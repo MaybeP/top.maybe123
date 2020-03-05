@@ -63,112 +63,112 @@
 </template>
 
 <script>
-  import texttp from '@/components/texttp'
-  export default {
-    name: 'write',
-    data: function () {
-      return {
-        dr: false,
-        dr2: false,
-        img: '',
-        fenlei: [{value: '爱情',
-          label: '爱情'
-        },
-          {value: '伤感',
-            label: '伤感'
-          },
-          {value: '抒情',
-            label: '抒情'
-          },
-          {value: '散文诗',
-            label: '散文诗'
-          },
-          {value: '写景',
-            label: '写景'
-          },
-          {value: '叙事',
-            label: '叙事'
-          },
-          {value: '优美',
-            label: '优美'
-          },
-          {value: '游记',
-            label: '游记'
-          },
-          {value: '名家',
-            label: '名家'
-          }
-        ],
-        laiyuan: [{value: '原创', label: '原创'}, {value: '其它', label: '其它'}],
-        current: 0,
-        prose: {
-          prose_titl: '',
-          prose_content: '',
-          prose_time: '',
-          prose_from: '',
-          prose_author: '',
-          prose_times: 0,
-          prose_classify: '',
-          prose_img: null
-        }
+import texttp from '@/components/texttp'
+export default {
+  name: 'write',
+  data: function () {
+    return {
+      dr: false,
+      dr2: false,
+      img: '',
+      fenlei: [{value: '爱情',
+        label: '爱情'
+      },
+      {value: '伤感',
+        label: '伤感'
+      },
+      {value: '抒情',
+        label: '抒情'
+      },
+      {value: '散文诗',
+        label: '散文诗'
+      },
+      {value: '写景',
+        label: '写景'
+      },
+      {value: '叙事',
+        label: '叙事'
+      },
+      {value: '优美',
+        label: '优美'
+      },
+      {value: '游记',
+        label: '游记'
+      },
+      {value: '名家',
+        label: '名家'
       }
-    },
-    components: {texttp},
-    methods: {
-      checktitle () {
-        let th = this
-        if (this.prose.prose_titl != null) {
-          this.$axios.get('http://www.maybe123.top:8080/getProseOne.action?title=' + (th.prose.prose_titl))
-            .then(function (res) {
-              if (res.data.prose_author != null) {
-                if (res.data.prose_author === sessionStorage.getItem('u_name')) {
-                  th.prose = res.data
-                  th.prose.id = res.data.id
-                  th.$Message.warning('您当前名下存在同名作品，进入编辑模式！')
-                  th.current++
-                } else { th.$Message.error('文章已存在！') }
-              } else {
-                th.current++
-                th.$Message.success('验证通过')
-              }
-            })
-            .catch(function (err) {
-              alert(err)
-            })
-        } else { alert('请输入题目') }
-      },
-      inserTex () {
-        this.dr = true
-      },
-      insertimg () {
-        this.prose.prose_content += '\r\n<img  src="' + this.img + '" width="auto" height="200px"/>'
-      },
-      addtext () {
-        this.prose.prose_content += sessionStorage.getItem('sb_text')
-        sessionStorage.setItem('sb_text', '')
-      },
-      checkfenlei () {
-        this.current++
-      },
-      sub () {
-        let th = this
-        var list = []
-        list.push(th.prose)
-        this.$axios.post('http://www.maybe123.top:8080/insertProse.action?', 'proses=' + JSON.stringify(list))
+      ],
+      laiyuan: [{value: '原创', label: '原创'}, {value: '其它', label: '其它'}],
+      current: 0,
+      prose: {
+        prose_titl: '',
+        prose_content: '',
+        prose_time: '',
+        prose_from: '',
+        prose_author: '',
+        prose_times: 0,
+        prose_classify: '',
+        prose_img: null
+      }
+    }
+  },
+  components: {texttp},
+  methods: {
+    checktitle () {
+      let th = this
+      if (this.prose.prose_titl != null) {
+        this.$axios.get('http://www.maybe123.top:8080/getProseOne.action?title=' + (th.prose.prose_titl))
           .then(function (res) {
-            th.$Message.success(res.data)
+            if (res.data.prose_author != null) {
+              if (res.data.prose_author === sessionStorage.getItem('u_name')) {
+                th.prose = res.data
+                th.prose.id = res.data.id
+                th.$Message.warning('您当前名下存在同名作品，进入编辑模式！')
+                th.current++
+              } else { th.$Message.error('文章已存在！') }
+            } else {
+              th.current++
+              th.$Message.success('验证通过')
+            }
           })
           .catch(function (err) {
             alert(err)
           })
-      }
-
+      } else { alert('请输入题目') }
     },
-    mounted () {
-
+    inserTex () {
+      this.dr = true
+    },
+    insertimg () {
+      this.prose.prose_content += '\r\n<img  src="' + this.img + '" width="auto" height="200px"/>'
+    },
+    addtext () {
+      this.prose.prose_content += sessionStorage.getItem('sb_text')
+      sessionStorage.setItem('sb_text', '')
+    },
+    checkfenlei () {
+      this.current++
+    },
+    sub () {
+      let th = this
+      var list = []
+      list.push(th.prose)
+      this.$axios.post('http://www.maybe123.top:8080/insertProse.action?', 'proses=' + JSON.stringify(list))
+        .then(function (res) {
+          th.$Message.success(res.data)
+        })
+        .catch(function (err) {
+          alert(err)
+        })
     }
 
+  },
+  mounted () {
+
   }
+
+}
 </script>
 
 <style scoped>

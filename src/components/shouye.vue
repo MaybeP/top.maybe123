@@ -13,7 +13,7 @@
 
     <Card border="true" >
       <Row   justify="start" align="top" style="padding-top: 15px;background:#f5f5f5;padding-bottom: 15px;padding-right: 3%">
-        <Col v-for="item in recom_data" :xs="18" :sm="10" :md="6" :lg="4" offset="2" style="padding-top: 30px;">
+        <Col v-for="item in recom_data" :key="item.prose_titl" :xs="18" :sm="10" :md="6" :lg="4" offset="2" style="padding-top: 30px;">
           <Card  style="height: 390px;text-align: center;">
             <img  class="img_border" width="100%" height="120px"  :title="item.prose_titl" :alt="item.prose_titl" v-lazy="item.prose_img" :key="item.prose_img">
             <h3 style="color: black;padding-top: 10px" >{{item.prose_titl}}</h3>

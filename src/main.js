@@ -1,16 +1,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import iView from 'iview'
-import 'iview/dist/styles/iview.css'
 import Axios from 'axios'
+import ViewUI from 'view-design'
+import 'view-design/dist/styles/iview.css'
+import '../my-theme/dist/iview.css'
 //import '@/my_theme/index.less'
 import VueLazyLoad from 'vue-lazyload'
 Vue.config.productionTip = false
-Vue.use(iView)
+Vue.use(ViewUI)
 Vue.use(VueLazyLoad, {error: 'http://www.maybe123.top:888/image/self/err.jpg', loading: 'http://www.maybe123.top:888/image/self/loading.gif'})
-// Vue.use(axios)
-debugger;
 Vue.prototype.$axios = Axios
 
 /* eslint-disable no-new */
